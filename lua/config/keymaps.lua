@@ -16,20 +16,18 @@ vim.keymap.set(
     { desc = "move up selected lines in visual mode" }
 )
 
-local Terminal = require("toggleterm.terminal").Terminal
-local lazydocker = Terminal:new({
-    cmd = "lazydocker",
-    hidden = true,
-    direction = "float",
-})
-
-function _lazydocker_toggle()
+vim.keymap.set("n", "<leader>Ld", function()
+    local Terminal = require("toggleterm.terminal").Terminal
+    local lazydocker = Terminal:new({
+        cmd = "lazydocker",
+        hidden = true,
+        direction = "float",
+    })
     lazydocker:toggle()
-end
+end, { desc = "Toggle lazydocker", noremap = true, silent = true })
 
-vim.keymap.set(
-    "n",
-    "<leader>Ld",
-    "<cmd>lua _lazydocker_toggle()<CR>",
-    { desc = "Toggle lazydocker", noremap = true, silent = true }
-)
+vim.keymap.set("n", "<leader>md", function()
+    local mark = vim.fn.getcharstr()
+    vim.notify("deleting mark " .. mark)
+    vim.cmd("delmarks " .. mark)
+end, { desc = "Delete mark" })
