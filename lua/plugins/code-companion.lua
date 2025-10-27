@@ -3,6 +3,8 @@ return {
     opts = {
         strategies = {
             chat = { adapter = "gemini_cli" },
+            inline = { adapter = "gemini_cli" },
+            cmd = { adapter = "gemini_cli" },
         },
         adapters = {
             acp = {
@@ -28,7 +30,7 @@ return {
     },
     keys = {
         {
-            "<leader>cc",
+            "<leader>ai",
             "<cmd>CodeCompanionChat Toggle<cr>",
             desc = "Toggle code companion",
         },

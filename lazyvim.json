@@ -1,7 +1,10 @@
 {
   "extras": [
     "lazyvim.plugins.extras.ai.codeium",
-    "lazyvim.plugins.extras.coding.nvim-cmp"
+    "lazyvim.plugins.extras.coding.nvim-cmp",
+    "lazyvim.plugins.extras.lang.docker",
+    "lazyvim.plugins.extras.lang.dotnet",
+    "lazyvim.plugins.extras.lang.go"
   ],
   "install_version": 8,
   "news": {
