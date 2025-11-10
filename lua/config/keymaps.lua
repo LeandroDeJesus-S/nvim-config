@@ -2,6 +2,7 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local opts = { noremap = true, silent = true }
+local state = {}
 
 vim.keymap.set(
     "v",
@@ -17,13 +18,15 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<leader>Ld", function()
-    local Terminal = require("toggleterm.terminal").Terminal
-    local lazydocker = Terminal:new({
-        cmd = "lazydocker",
-        hidden = true,
-        direction = "float",
-    })
-    lazydocker:toggle()
+    if not state.lazydocker_term then
+        local Terminal = require("toggleterm.terminal").Terminal
+        state.lazydocker_term = Terminal:new({
+            cmd = "lazydocker",
+            hidden = true,
+            direction = "float",
+        })
+    end
+    state.lazydocker_term:toggle()
 end, { desc = "Toggle lazydocker", noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>md", function()
@@ -31,3 +34,10 @@ vim.keymap.set("n", "<leader>md", function()
     vim.notify("deleting mark " .. mark)
     vim.cmd("delmarks " .. mark)
 end, { desc = "Delete mark" })
+
+vim.keymap.set(
+    "t",
+    "<esc><esc>",
+    "<C-\\><C-n>",
+    { desc = "Escape terminal mode" }
+)

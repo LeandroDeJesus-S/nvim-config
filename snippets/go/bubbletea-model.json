@@ -1,0 +1,38 @@
+{
+    "bubbletea_model": {
+        "prefix": "teaModel",
+        "body": [
+            "type ${1:ModelName} struct {",
+            "\t$0",
+            "}",
+            "",
+            "func New${1:ModelName}() *${1:ModelName} {",
+            "\treturn &${1:ModelName}{}",
+            "}",
+            "",
+            "func (m ${1:ModelName}) Init() tea.Cmd {",
+            "\treturn nil",
+            "}",
+            "",
+            "func (m ${1:ModelName}) Update(msg tea.Msg) (tea.Model, tea.Cmd) {",
+            "\tswitch msg := msg.(type) {",
+            "\tcase tea.KeyMsg:",
+            "\t\tswitch msg.String() {",
+            "\t\tcase \"ctrl+c\", \"q\":",
+            "\t\t\treturn m, tea.Quit",
+            "\t\t}",
+            "\t}",
+            "\treturn m, nil",
+            "}",
+            "",
+            "func (m ${1:ModelName}) View() string {",
+            "\tif m.quiting {",
+            "\t\treturn \"\"",
+            "}",
+            "",
+            "\treturn \"\"",
+            "}"
+        ]
+    }
+}
+
