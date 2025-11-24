@@ -17,6 +17,9 @@ end
 return {
     {
         "neovim/nvim-lspconfig",
+        dependencies = {
+            "saghen/blink.cmp",
+        },
         ---@class PluginLspOpts
         opts = {
             ---@type lspconfig.options
@@ -104,6 +107,15 @@ return {
                         },
                     },
                 },
+            },
+        },
+    },
+    {
+        "folke/trouble.nvim",
+        opts = {
+            win = {
+                position = "right",
+                size = vim.fn.floor(vim.o.columns * 0.3),
             },
         },
     },
