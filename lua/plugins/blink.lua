@@ -46,7 +46,7 @@ return {
                                     )
                                     return ic
                                 end,
-                                hightlight = function(ctx)
+                                highlight = function(ctx)
                                     local _, hl, _ = require("mini.icons").get(
                                         "lsp",
                                         ctx.kind
