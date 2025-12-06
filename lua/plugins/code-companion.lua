@@ -81,11 +81,13 @@ return {
                 ["Convertional Commit"] = {
                     strategy = "chat",
                     description = "Suggests a semantic/convertional commit message",
+                    opts = {},
                     prompts = {
-                        role = "user",
-                        content = function(context)
-                            local tpl =
-                                [[Generate a high-quality commit message following the rules of Conventional Commits (https://www.conventionalcommits.org/).
+                        {
+                            role = "user",
+                            content = function(context)
+                                local tpl =
+                                    [[Generate a high-quality commit message following the rules of Conventional Commits (https://www.conventionalcommits.org/).
 
 Requirements:
 - Start with a valid type (feat, fix, refactor, docs, style, test, chore, perf, build, ci, revert).
@@ -107,15 +109,32 @@ The following are the staged changes; analyze them carefully and infer the most 
 %s
 ```
 ]]
-                            local diff = vim.system(
-                                { "git", "diff", "--no-ext-diff", "--staged" },
-                                { text = true }
-                            ):wait()
-                            return string.format(tpl, diff.stdout)
-                        end,
-                        opts = {
-                            contains_code = true,
+                                local diff = vim.system({
+                                    "git",
+                                    "diff",
+                                    "--no-ext-diff",
+                                    "--staged",
+                                }, {
+                                    text = true,
+                                }):wait()
+                                return string.format(tpl, diff.stdout)
+                            end,
+                            opts = {
+                                contains_code = true,
+                            },
                         },
+                    },
+                },
+            },
+            memory = {
+                opts = {
+                    enabled = true,
+                },
+                gemini = {
+                    enabled = true,
+                    description = "Gemini memory files",
+                    files = {
+                        "GEMINI.md",
                     },
                 },
             },
