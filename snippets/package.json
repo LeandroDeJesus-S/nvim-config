@@ -2,7 +2,8 @@
   "name": "personal-snippets",
   "contributes": {
     "snippets": [
-      { "language": "go", "path": "./go/bubbletea-model.json" }
+      { "language": "go", "path": "./go/bubbletea-model.json" },
+      { "language": "all", "path": "./prompting/frameworks.json" }
     ]
   }
 }

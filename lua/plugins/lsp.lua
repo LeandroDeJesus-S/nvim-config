@@ -99,9 +99,8 @@ return {
                     settings = {
                         disableOrganizeImports = true,
                         python = {
-                            pythonPath = getPyPoetryPath(),
+                            -- pythonPath = getPyPoetryPath(),
                             analysis = {
-                                -- ignore = { "*" },
                                 typeCheckingMode = "off",
                             },
                         },

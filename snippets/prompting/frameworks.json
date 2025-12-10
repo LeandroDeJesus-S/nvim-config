@@ -1,0 +1,85 @@
+{
+    "co-star": {
+        "prefix": "co-star",
+        "body": [
+            "# ${1:CO-STAR Prompt}",
+            "---",
+            "",
+            "## CONTEXT",
+            "${2:e.g., The user is a beginner learning about AI prompting.}",
+            "",
+            "## OBJECTIVE",
+            "${3:e.g., Explain the RACE framework in simple terms.}",
+            "",
+            "## STYLE",
+            "${4:e.g., Informal and educational.}",
+            "",
+            "## TONE",
+            "${5:e.g., Encouraging and friendly.}",
+            "",
+            "## AUDIENCE",
+            "${6:e.g., Students and beginners.}",
+            "",
+            "## RESPONSE",
+            "${7:e.g., A markdown list with brief explanations for each step.}"
+        ]
+    },
+    "race": {
+        "prefix": "race",
+        "body": [
+            "# ${1:RACE Prompt}",
+            "---",
+            "",
+            "## ROLE",
+            "${2:e.g., You are a senior software engineer.}",
+            "",
+            "## ACTION",
+            "${3:e.g., Write a Python function to parse a CSV file.}",
+            "",
+            "## CONTEXT",
+            "${4:e.g., The CSV file contains user data with columns 'id', 'name', 'email'.}",
+            "",
+            "## EXPECTED OUTCOME",
+            "${5:e.g., Return a list of dictionaries, where each dictionary represents a user.}"
+        ]
+    },
+    "rise": {
+        "prefix": "rise",
+        "body": [
+            "# ${1:RISE Prompt}",
+            "---",
+            "",
+            "## ROLE",
+            "${2:e.g., You are a world-class cybersecurity analyst.}",
+            "",
+            "## INPUT",
+            "${3:e.g., A log file showing multiple failed login attempts.}",
+            "",
+            "## STEPS",
+            "${4:e.g., 1. Analyze the log file for patterns. 2. Identify the source IP addresses. 3. Recommend firewall rules to block them.}",
+            "",
+            "## EXPECTATION",
+            "${5:e.g., A JSON object containing the identified IPs and the corresponding firewall rules.}"
+        ]
+    },
+    "ideas": {
+        "prefix": "ideas",
+        "body": [
+            "# ${1:IDEAS Image Prompt (for Google Models)}",
+            "---",
+            "",
+            "## INTRODUCTION",
+            "${2:e.g., A photorealistic image of...}",
+            "",
+            "## DESCRIPTION",
+            "${3:e.g., a majestic lion wearing a golden crown, looking proud.}",
+            "",
+            "## ENVIRONMENT",
+            "${4:e.g., sitting on a throne in a grand, medieval hall with stained glass windows.}",
+            "",
+            "## ARTISTIC STYLE",
+            "${5:e.g., Cinematic lighting, dramatic shadows, highly detailed, 8K resolution.}"
+        ]
+    }
+}
+
