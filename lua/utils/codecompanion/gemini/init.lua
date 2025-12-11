@@ -92,7 +92,7 @@ end
 function M.memory()
     return {
         description = "Gemini memory files",
-        parser = "clause",
+        parser = "claude",
         files = {
             "GEMINI.md",
             "AGENTS.md",

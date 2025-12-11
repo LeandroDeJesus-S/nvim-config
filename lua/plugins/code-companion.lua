@@ -60,6 +60,29 @@ return {
                         },
                     },
                 },
+                tools = {
+                    ["fetch_webpage"] = { adapter = "gemini" },
+                    groups = {
+                        ["read_only"] = {
+                            description = "Read-only tools - can be used to read and understand code",
+                            prompt = "You are able to use the tools ${tools} to perform read-only operations on code to understand and fetch information as you need.",
+                            tools = {
+                                "file_search",
+                                "read_file",
+                                "get_changed_files",
+                                "grep_search",
+                                "fetch_webpage",
+                                "list_code_usages",
+                            },
+                            opts = {
+                                collapse_tools = true,
+                            },
+                        },
+                    },
+                    opts = {
+                        default_tools = { "read_only" },
+                    },
+                },
             },
             inline = {
                 adapter = "gemini",
