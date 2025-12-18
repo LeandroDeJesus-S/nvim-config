@@ -7,8 +7,9 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.autoread = true
+vim.o.winborder = "rounded"
 
 -- treesitter folding
 vim.wo.foldmethod = "expr"
