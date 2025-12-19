@@ -9,7 +9,6 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.autoread = true
-vim.o.winborder = "rounded"
 
 -- treesitter folding
 vim.wo.foldmethod = "expr"

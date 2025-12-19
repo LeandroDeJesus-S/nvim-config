@@ -28,6 +28,7 @@ return {
                     show_on_blocked_trigger_characters = { " ", "\n", "\t" },
                 },
                 menu = {
+                    border = "rounded",
                     draw = {
                         components = {
                             src_name = {
