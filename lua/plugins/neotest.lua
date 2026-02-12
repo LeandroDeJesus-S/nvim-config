@@ -20,7 +20,7 @@ return {
         },
         opts = {
             adapters = {
-                "neotest-python",
+                ["neotest-python"] = { args = { "-vvv" } },
                 ["neotest-golang"] = { runner = "gotestsum" },
             },
         },
