@@ -14,3 +14,40 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
     end,
 })
+
+local cc_group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
+
+vim.api.nvim_create_autocmd({ "User" }, {
+    pattern = {
+        "CodeCompanionChatACPModeChanged",
+        "CodeCompanionChatCreated",
+        "CodeCompanionChatOpened",
+    },
+    group = cc_group,
+    callback = function(request)
+        local ok, chat = pcall(
+            require("codecompanion.interactions.chat").buf_get_chat,
+            request.buf
+        )
+        if ok and chat then
+            if request.match == "CodeCompanionChatACPModeChanged" then
+                local modes = chat.acp_connection:get_modes()
+                if modes and modes.currentModeId then
+                    for _, mode in ipairs(modes.availableModes) do
+                        if mode.id == modes.currentModeId then
+                            vim.g.codecompanion_acp_mode = mode.name
+                            require("lualine").refresh()
+                            break
+                        end
+                    end
+                end
+            else
+                -- For Created/Opened events, use the shared logic
+                require("utils.codecompanion.callbacks.display_acp_mode").request(
+                    nil,
+                    chat
+                )
+            end
+        end
+    end,
+})

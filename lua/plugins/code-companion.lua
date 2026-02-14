@@ -11,6 +11,29 @@ return {
         "nvim-treesitter/nvim-treesitter",
         "nvim-telescope/telescope.nvim",
         "franco-ruggeri/codecompanion-spinner.nvim",
+        {
+            "HakonHarnes/img-clip.nvim",
+            opts = {
+                filetypes = {
+                    codecompanion = {
+                        prompt_for_file_name = false,
+                        template = "[Image]($FILE_PATH)",
+                        use_absolute_path = true,
+                    },
+                },
+            },
+            keys = {
+                {
+                    "<C-p>",
+                    "<cmd>PasteImage<cr>",
+                    desc = "Paste image from system clipboard",
+                    mode = { "n", "i" },
+                },
+            },
+        },
+    },
+    cmd = {
+        "CodeCompanion",
     },
     keys = {
         {
@@ -25,6 +48,9 @@ return {
         },
     },
     opts = {
+        opts = {
+            log_level = "TRACE",
+        },
         display = {
             action_palette = {
                 provider = "telescope",
@@ -32,27 +58,51 @@ return {
             chat = {
                 window = {
                     width = chat_w_pct,
+                    opts = {
+                        number = false,
+                        relativenumber = false,
+                    },
                 },
             },
         },
         extensions = {
             spinner = {},
         },
-        strategies = {
+        interactions = {
+            background = {
+                adapter = "ollama",
+                model = "qwen3:0.6b",
+                chat = {
+                    opts = {
+                        enabled = true,
+                    },
+                    callbacks = {
+                        ["on_ready"] = {
+                            actions = {
+                                "utils.codecompanion.callbacks.display_acp_mode",
+                            },
+                            enabled = true,
+                        },
+                    },
+                },
+            },
             chat = {
                 roles = {
                     llm = function(adapter)
                         local icon = "🤖"
                         local name = adapter.formatted_name
-                        local model = adapter.model.name
+                        local model = adapter.model.name or adapter.model
                         return string.format("%s %s (%s)", icon, name, model)
                     end,
                     user = "🧑🏼‍💻 Me",
                 },
-                adapter = "gemini",
+                adapter = {
+                    name = "opencode",
+                    model = "google/antigravity-claude-sonnet-4-5-thinking",
+                },
                 slash_commands = {
                     ["file"] = {
-                        callback = "strategies.chat.slash_commands.catalog.file",
+                        callback = "interactions.chat.slash_commands.catalog.file",
                         description = "Select a file using Telescope",
                         opts = {
                             provider = "telescope",
@@ -79,8 +129,53 @@ return {
                             },
                         },
                     },
-                    opts = {
-                        default_tools = { "read_only" },
+                    -- opts = {
+                    --     default_tools = { "read_only" },
+                    -- },
+                },
+                keymaps = {
+                    change_mode = {
+                        modes = { n = "gm" },
+                        index = 25,
+                        callback = function(chat)
+                            if not chat.acp_connection then
+                                return
+                            end
+
+                            local modes = chat.acp_connection:get_modes()
+                            if
+                                not modes
+                                or not modes.availableModes
+                                or #modes.availableModes == 0
+                            then
+                                return
+                            end
+
+                            -- Find current mode index
+                            local current_idx = 1
+                            for i, mode in ipairs(modes.availableModes) do
+                                if mode.id == modes.currentModeId then
+                                    current_idx = i
+                                    break
+                                end
+                            end
+
+                            -- Cycle to next mode
+                            local next_idx = (
+                                current_idx % #modes.availableModes
+                            ) + 1
+                            local next_mode = modes.availableModes[next_idx]
+
+                            chat.acp_connection:set_mode(next_mode.id)
+                            chat:update_metadata()
+                            vim.g.codecompanion_acp_mode = next_mode.name
+                            require("lualine").refresh()
+                            require("codecompanion.utils").notify(
+                                "Switched to " .. next_mode.name .. " mode",
+                                vim.log.levels.INFO
+                            )
+                        end,
+                        description = "[ACP] Cycle session mode",
                     },
                 },
             },
@@ -115,7 +210,7 @@ return {
                         },
                         schema = {
                             model = {
-                                default = "gemini-2.5-flash",
+                                default = "gemini-3-flash-preview",
                             },
                         },
                         handlers = {
@@ -148,18 +243,28 @@ return {
             },
         },
         prompt_library = prompts,
-        memory = {
+        rules = {
             opts = {
                 chat = {
                     enabled = true,
-                    defualt_memory = { "default", "gemini" },
+                    autoload = { "default", "gemini" },
                 },
             },
             gemini = gemini.memory(),
         },
     },
     config = function(_, opts)
-        gemini.sync_key()
+        local interactions = opts.interactions or {}
+        local chat = interactions.chat or {}
+        local adapter = chat.adapter or ""
+
+        if
+            (type(adapter) == "string" and adapter == "gemini")
+            or (type(adapter) == "table" and adapter.name == "gemini")
+        then
+            gemini.sync_key()
+        end
+
         require("codecompanion").setup(opts)
     end,
 }

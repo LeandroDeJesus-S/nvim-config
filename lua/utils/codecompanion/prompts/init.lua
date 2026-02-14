@@ -29,7 +29,7 @@
 ---@class CodeCompanionPromptOpts
 ---@field mapping string | nil
 ---@field modes string[] | nil
----@field short_name string | nil
+---@field alias string | nil
 ---@field auto_submit boolean | nil
 ---@field stop_context_insertion boolean | nil
 ---@field user_prompt boolean | nil
@@ -41,6 +41,7 @@
 ---@field intro_message string | nil
 ---@field index number | nil
 ---@field is_default boolean | nil
+---@field is_workflow boolean | nil
 
 ---@class CodeCompanionFileContext
 ---@field type "file"
@@ -57,7 +58,7 @@
 ---@alias CodeCompanionPreloadContext CodeCompanionFileContext | CodeCompanionSymbolsContext | CodeCompanionUrlContext
 
 ---@class CodeCompanionPromptDefinition
----@field strategy "chat" | "inline" | string
+---@field interaction "chat" | "inline" | string
 ---@field description string
 ---@field opts CodeCompanionPromptOpts | nil
 ---@field prompts CodeCompanionPromptMessage[]

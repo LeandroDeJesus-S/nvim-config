@@ -64,6 +64,10 @@ return {
             require("opencode").command("prompt.clear")
         end, { desc = "Clear opencode prompt" })
 
+        vim.keymap.set("n", "<C-o><C-s>", function()
+            require("opencode").command("prompt.submit")
+        end, { desc = "Submit opencode prompt" })
+
         vim.keymap.set({ "n", "t" }, "<C-o><C-u>", function()
             require("opencode").command("session.undo")
         end, { desc = "Undo opencode session" })
