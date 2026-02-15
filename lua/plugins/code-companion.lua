@@ -102,7 +102,7 @@ return {
                 },
                 slash_commands = {
                     ["file"] = {
-                        callback = "interactions.chat.slash_commands.catalog.file",
+                        callback = "interactions.chat.slash_commands.builtin.file",
                         description = "Select a file using Telescope",
                         opts = {
                             provider = "telescope",
